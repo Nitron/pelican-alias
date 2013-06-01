@@ -1,17 +1,23 @@
 pelican-alias
 ====================
 
-[Pelican](http://getpelican.com) plugin for creating alias pages (useful for moving from a different URL scheme such as /&lt;year>/&lt;month>/&lt;title>/ as used by Wordpress)
+[Pelican](http://getpelican.com) plugin for creating alias pages (useful for moving from a different URL scheme such as /&lt;year>/&lt;month>/&lt;title>/ as used by Wordpress).
 
-Inspired by [jekyll_alias_generator](https://github.com/tsmango/jekyll_alias_generator/)
+Inspired by [jekyll_alias_generator](https://github.com/tsmango/jekyll_alias_generator/).
 
 License: MIT
+
+Installation
+============
+
+Simply run
+
+```pip install pelican-alias```
 
 Usage
 =====
 
-* Clone to your plugins directory (or git submodule)
-* Add to `PLUGINS` in the pelican configuration file
+* Add `pelican_alias` to `PLUGINS` in the pelican configuration file
 * In each post or page that needs an alias, add an `:alias:` line to the metadata section. Example:
 
 ```
