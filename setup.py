@@ -16,10 +16,10 @@ setup(
     author_email = 'chris@christopher-williams.net',
     license = 'MIT',
     url = 'https://github.com/Nitron/pelican-alias',
+    download_url = 'https://github.com/Nitron/pelican-alias/tarball/1.0',
     keywords = 'pelican blog',
     description = (
         'Pelican plugin for creating alias pages'
         '(useful for moving from a different URL scheme such '
         'as /<year>/<month>/<title>/ as used by Wordpress)'),
-    long_description = open(normpath(join(dirname(abspath(__file__)), 'README.md'))).read(),
 )
