@@ -28,7 +28,7 @@ class AliasGenerator(object):
         try:
             os.makedirs(directory)
         except OSError:
-            logger.warn('[alias] Directory %s already exists' % directory)
+            pass
 
         if filename == '':
             path = os.path.join(path, 'index.html')
@@ -48,7 +48,7 @@ class AliasGenerator(object):
                 continue
 
             for alias in page.metadata['alias'].split(self.alias_delimiter):
-                # TODO: Trim the alias so that ', ' can be used to delimit
+                alias = alias.strip()
                 logger.info('[alias] Processing alias %s' % alias)
                 self.create_alias(page, alias)
 
