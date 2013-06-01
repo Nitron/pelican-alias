@@ -27,6 +27,7 @@ class AliasGenerator(object):
 {% endif %}
 </head></html>
 """
+
     def __init__(self, context, settings, path, theme, output_path, *args):
         self.output_path = output_path
         self.context = context
