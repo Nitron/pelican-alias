@@ -5,11 +5,28 @@ import os.path
 import logging
 
 from pelican import signals
+from jinja2 import Template
 
 logger = logging.getLogger(__name__)
 
 
 class AliasGenerator(object):
+    TEMPLATE = """<!DOCTYPE html><html><head><link rel="canonical" href="/{{ destination_path }}"/>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="refresh" content="0;url=/{{ destination_path }}" />
+{% if analytics_key %}
+<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%%3E%%3C/script%%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("{{ analytics_key }}");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>
+{% endif %}
+</head></html>
+"""
     def __init__(self, context, settings, path, theme, output_path, *args):
         self.output_path = output_path
         self.context = context
@@ -37,24 +54,8 @@ class AliasGenerator(object):
         logger.info('[alias] Writing to alias file %s' % path)
         # TODO: Find a better way to get the URL to redirect to. This method doesn't work when not in production.
         with open(path, 'w') as fd:
-            template = """<!DOCTYPE html><html><head><link rel="canonical" href="%s"/>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="0;url=/%s" />%s</head></html>"""
-
-            if self.analytics_key:
-                analytics_code = """<script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%%3E%%3C/script%%3E"));
-    </script>
-    <script type="text/javascript">
-    try {
-        var pageTracker = _gat._getTracker("%s");
-    pageTracker._trackPageview();
-    } catch(err) {}</script>""" % self.analytics_key
-            else:
-                analytics_code = ''
-
-            fd.write(template % (alias, page.url, analytics_code))
+            template = Template(self.TEMPLATE)
+            fd.write(template.render(destination_path=page.url, analytics_key=self.analytics_key))
 
     def generate_output(self, writer):
         pages = self.context['pages'] + self.context['articles']
