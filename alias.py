@@ -34,7 +34,7 @@ class AliasGenerator(object):
             path = os.path.join(path, 'index.html')
 
         logger.info('[alias] Writing to alias file %s' % path)
-        # TODO: Find a better way to get the URL to redirect to. This method doesn't work in development.
+        # TODO: Find a better way to get the URL to redirect to. This method doesn't work when not in production.
         with open(path, 'w') as fd:
             fd.write("""<!DOCTYPE html><html><head><link rel="canonical" href="%s"/>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -48,6 +48,7 @@ class AliasGenerator(object):
                 continue
 
             for alias in page.metadata['alias'].split(self.alias_delimiter):
+                # TODO: Trim the alias so that ', ' can be used to delimit
                 logger.info('[alias] Processing alias %s' % alias)
                 self.create_alias(page, alias)
 
