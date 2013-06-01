@@ -14,6 +14,7 @@ class AliasGenerator(object):
         self.output_path = output_path
         self.context = context
         self.alias_delimiter = settings.get('ALIAS_DELIMITER', ',')
+        self.analytics_key = settings.get('GOOGLE_ANALYTICS', None)
 
     def create_alias(self, page, alias):
         # If path starts with a /, remove it
@@ -36,9 +37,24 @@ class AliasGenerator(object):
         logger.info('[alias] Writing to alias file %s' % path)
         # TODO: Find a better way to get the URL to redirect to. This method doesn't work when not in production.
         with open(path, 'w') as fd:
-            fd.write("""<!DOCTYPE html><html><head><link rel="canonical" href="%s"/>
+            template = """<!DOCTYPE html><html><head><link rel="canonical" href="%s"/>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="0;url=/%s" /></head></html>""" % (alias, page.url))
+<meta http-equiv="refresh" content="0;url=/%s" />%s</head></html>"""
+
+            if self.analytics_key:
+                analytics_code = """<script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%%3E%%3C/script%%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+        var pageTracker = _gat._getTracker("%s");
+    pageTracker._trackPageview();
+    } catch(err) {}</script>""" % self.analytics_key
+            else:
+                analytics_code = ''
+
+            fd.write(template % (alias, page.url, analytics_code))
 
     def generate_output(self, writer):
         pages = self.context['pages'] + self.context['articles']
