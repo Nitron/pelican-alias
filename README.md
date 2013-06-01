@@ -14,14 +14,16 @@ Usage
 * Add to `PLUGINS` in the pelican configuration file
 * In each post or page that needs an alias, add an `:alias:` line to the metadata section. Example:
 
-    My Aliased Post
-    ##############################################
-    :date: 2013-05-31 22:09
-    :category: Pelican
-    :slug: my-aliased-post
-    :alias: /2013/05/my-aliased-post/
+```
+My Aliased Post
+##############################################
+:date: 2013-05-31 22:09
+:category: Pelican
+:slug: my-aliased-post
+:alias: /2013/05/my-aliased-post/
 
-    My content goes here.
+My content goes here.
+```
 
 This will create an additional HTML document at the path specified by `:alias:` that performs a canonical `meta` refresh to the new URL.
 If the path ends in a slash (as in the above example) then the file actually created will be index.html so that this system will work with
