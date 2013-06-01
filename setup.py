@@ -3,7 +3,7 @@ from os.path import abspath, dirname, join, normpath
 from setuptools import setup
 
 setup(
-    name = 'pelican-plugin-alias',
+    name = 'pelican-alias',
     version = '1.0',
     py_modules = ('alias',),
 
@@ -15,7 +15,7 @@ setup(
     author = 'Christopher Williams',
     author_email = 'chris@christopher-williams.net',
     license = 'MIT',
-    url = 'https://github.com/Nitron/pelican-plugin-alias',
+    url = 'https://github.com/Nitron/pelican-alias',
     keywords = 'pelican blog',
     description = (
         'Pelican plugin for creating alias pages'
