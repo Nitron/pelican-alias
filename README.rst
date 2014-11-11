@@ -25,13 +25,24 @@ Usage
 	:date: 2013-05-31 22:09
 	:category: Pelican
 	:slug: my-aliased-post
-	:alias: /2013/05/my-aliased-post/
+	:alias: /2013/05/my-aliased-post/, /2013/even-older-post-address
 
 	My content goes here.
+
+* Markdown example::
+
+    Title: Another Aliased Post
+    Date: 2013-06-01 21:10
+    Category: Pelican
+    Alias: /2013/06/another-aliased-post/
+           /2013/even-older-aliased-post-address
+
+    My content goes here.
 
 This will create an additional HTML document at the path specified by *:alias:* that performs a canonical *meta* refresh to the new URL.
 If the path ends in a slash (as in the above example) then the file actually created will be index.html so that this system will work with
 Github pages.
 
-Multiple aliases can be created for a single post by using a comma-delimited list. The delimiter may be changed by setting *ALIAS_DELIMITER*
-in the pelican configuration file.
+Multiple aliases can be created for a single post. The delimiter for ReST
+format may be changed by setting *ALIAS_DELIMITER* in the pelican
+configuration file.
