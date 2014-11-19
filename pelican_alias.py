@@ -5,17 +5,14 @@ import os.path
 import logging
 
 from pelican import signals
-from jinja2 import Template
 
 logger = logging.getLogger(__name__)
 
 
 class AliasGenerator(object):
-    TEMPLATE = """<!DOCTYPE html><html><head><link rel="canonical" href="/{{ destination_path }}"/>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="refresh" content="0;url=/{{ destination_path }}" />
-</head></html>
-"""
+    TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8" />
+<meta http-equiv="refresh" content="0;url=/{{destination_path}}" />
+</head></html>"""
 
     def __init__(self, context, settings, path, theme, output_path, *args):
         self.output_path = output_path
@@ -42,8 +39,7 @@ class AliasGenerator(object):
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:
-            template = Template(self.TEMPLATE)
-            fd.write(template.render(destination_path=page.url))
+            fd.write(self.TEMPLATE.format(destination_path=page.url))
 
     def generate_output(self, writer):
         pages = self.context['pages'] + self.context['articles']
