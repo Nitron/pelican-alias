@@ -45,10 +45,10 @@ class AliasGenerator(object):
         pages = self.context['pages'] + self.context['articles']
 
         for page in pages:
-            if 'alias' not in page.metadata.keys():
-                continue
-
-            for alias in page.metadata['alias'].split(self.alias_delimiter):
+            aliases = page.metadata.get('alias', [])
+            if type(aliases) != list:
+                aliases = aliases.split(self.alias_delimiter)
+            for alias in aliases:
                 alias = alias.strip()
                 logger.info('[alias] Processing alias %s' % alias)
                 self.create_alias(page, alias)
