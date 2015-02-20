@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 class AliasGenerator(object):
     TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8" />
-<meta http-equiv="refresh" content="0;url=/{{destination_path}}" />
+<meta http-equiv="refresh" content="0;url=/{destination_path}" />
 </head></html>"""
 
     def __init__(self, context, settings, path, theme, output_path, *args):
