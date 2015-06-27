@@ -42,7 +42,9 @@ class AliasGenerator(object):
             fd.write(self.TEMPLATE.format(destination_path=page.url))
 
     def generate_output(self, writer):
-        pages = self.context['pages'] + self.context['articles']
+        pages = (
+            self.context['pages'] + self.context['articles'] +
+            self.context.get('hidden_pages', []))
 
         for page in pages:
             aliases = page.metadata.get('alias', [])
