@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name = 'pelican-alias',
-    version = '1.0',
+    version = '1.1',
     py_modules = ('pelican_alias',),
 
     zip_safe = False,
