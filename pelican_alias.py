@@ -40,10 +40,12 @@ class AliasGenerator(object):
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:
-            # test to see if we are redirecting to a full url
             destination = page.url
-            if not urlparse(destination).scheme and not destination.startswith('/'):
-                destination = '/{0}'.format(destination)
+            # if schema is empty then we are working with a local path
+            if not urlparse(destination).scheme:
+                # if local path is missing a leading slash then add it
+                if not destination.startswith('/'):
+                    destination = '/{0}'.format(destination)
             fd.write(self.TEMPLATE.format(destination=destination))
 
     def generate_output(self, writer):
