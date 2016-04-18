@@ -21,7 +21,6 @@ class AliasGenerator(object):
         self.alias_delimiter = settings.get('ALIAS_DELIMITER', ',')
 
     def create_alias(self, page, alias):
-
         # If path starts with a /, remove it
         if alias[0] == '/':
             relative_alias = alias[1:]
