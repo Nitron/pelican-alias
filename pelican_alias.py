@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 import os.path
 import logging
+from urlparse import urlparse
 
 from pelican import signals
 
@@ -11,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class AliasGenerator(object):
     TEMPLATE = """<!DOCTYPE html><html><head><meta charset="utf-8" />
-<meta http-equiv="refresh" content="0;url=/{destination_path}" />
+<meta http-equiv="refresh" content="0;url={destination}" />
 </head></html>"""
 
     def __init__(self, context, settings, path, theme, output_path, *args):
@@ -20,6 +21,7 @@ class AliasGenerator(object):
         self.alias_delimiter = settings.get('ALIAS_DELIMITER', ',')
 
     def create_alias(self, page, alias):
+
         # If path starts with a /, remove it
         if alias[0] == '/':
             relative_alias = alias[1:]
@@ -39,7 +41,11 @@ class AliasGenerator(object):
 
         logger.info('[alias] Writing to alias file %s' % path)
         with open(path, 'w') as fd:
-            fd.write(self.TEMPLATE.format(destination_path=page.url))
+            # test to see if we are redirecting to a full url
+            destination = page.url
+            if not urlparse(destination).scheme and not destination.startswith('/'):
+                destination = '/{0}'.format(destination)
+            fd.write(self.TEMPLATE.format(destination=destination))
 
     def generate_output(self, writer):
         pages = (

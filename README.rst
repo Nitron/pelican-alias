@@ -46,3 +46,10 @@ Github pages.
 Multiple aliases can be created for a single post. The delimiter for ReST
 format may be changed by setting *ALIAS_DELIMITER* in the pelican
 configuration file.
+
+* Redirect to external URLs::
+
+    Title: Pelican-Alias on PyPi
+    Date: 2013-06-01 21:10
+    URL: https://pypi.python.org/pypi/pelican-alias
+    Alias: /pypi/
